@@ -1,8 +1,10 @@
 name: Build React App
 on: [workflow_dispatch]
 jobs:
-  print:
+  prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: Print
-        run: echo Hello World
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependecies
+        run: npm ci
