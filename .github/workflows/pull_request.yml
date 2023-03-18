@@ -1,0 +1,33 @@
+name: Build React App
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, edited, reopened]
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+  lint:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
