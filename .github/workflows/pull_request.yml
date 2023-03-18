@@ -3,12 +3,19 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths-ignore:
+      - '.github/workflows/*'
 jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
   lint:
@@ -17,6 +24,11 @@ jobs:
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -27,6 +39,11 @@ jobs:
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
+      - name: Cache deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Build
