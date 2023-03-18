@@ -1,5 +1,8 @@
-name: Build React App
-on: [workflow_dispatch]
+name: Deploy App
+on:
+  push:
+    branches:
+      - main
 jobs:
   prepare:
     runs-on: ubuntu-latest
